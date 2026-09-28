@@ -1,0 +1,1106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mapa del proyecto FERRO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#EDF0F3; --sheet:#FFFFFF; --ink:#14171B; --ink-2:#4B5663; --ink-3:#6F7A87;
+  --steel:#3E5467; --steel-soft:#E4EAF0; --rule:#D2D9E0; --grid:rgba(62,84,103,.08);
+  --accent:#D92420; --accent-soft:#FBE5E4; --warn:#945D05; --warn-soft:#FAF0DC;
+  --ok:#2B7349; --ok-soft:#E0F0E6; --focus:#1D64D8;
+  --font-display:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+  --font-body:"IBM Plex Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0D1013; --sheet:#151A1F; --ink:#E4E8EC; --ink-2:#A2ADB9; --ink-3:#808B97;
+    --steel:#94AAC0; --steel-soft:#1D252D; --rule:#2B343D; --grid:rgba(148,170,192,.07);
+    --accent:#FF5A52; --accent-soft:#3A1715; --warn:#E6AA48; --warn-soft:#33270F;
+    --ok:#62C08C; --ok-soft:#13291D; --focus:#79AEFF;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0D1013; --sheet:#151A1F; --ink:#E4E8EC; --ink-2:#A2ADB9; --ink-3:#808B97;
+  --steel:#94AAC0; --steel-soft:#1D252D; --rule:#2B343D; --grid:rgba(148,170,192,.07);
+  --accent:#FF5A52; --accent-soft:#3A1715; --warn:#E6AA48; --warn-soft:#33270F;
+  --ok:#62C08C; --ok-soft:#13291D; --focus:#79AEFF;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:64px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+p{margin:0}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:700;line-height:1.08;margin:0;text-wrap:balance}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+
+/* Navigation */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.nav-inner{display:flex;align-items:center;gap:18px;min-height:48px}
+.nav-brand{font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.nav-links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-inline-start:auto}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:13px;text-decoration:none;padding:6px 10px;border:1px solid transparent;white-space:nowrap;color:var(--ink-2)}
+.nav-links a b{font-family:var(--font-mono);font-weight:600;color:var(--ink);margin-inline-end:6px;font-size:12px}
+.nav-links a:hover{border-color:var(--rule);color:var(--ink)}
+@media (max-width:640px){.nav-brand{display:none}.nav-links{margin-inline-start:0}}
+
+/* Hero */
+.hero{background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;border-bottom:1px solid var(--rule)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:44px;padding-block:52px 44px;align-items:start}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:14px}
+h1{font-size:clamp(42px,6.2vw,74px);letter-spacing:.003em}
+h1 .red{color:var(--accent)}
+.lead{font-size:19px;color:var(--ink-2);max-width:60ch;margin-top:18px}
+.thesis{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:10px;max-width:62ch}
+.thesis li{display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:baseline}
+.thesis li::before{content:"";width:10px;height:10px;border:2px solid var(--accent);transform:translateY(1px)}
+.rotulo{background:var(--sheet);border:1.5px solid var(--ink);font-size:14px}
+.rotulo-head{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1.5px solid var(--ink);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.rotulo dl{display:grid;grid-template-columns:1fr 1fr;margin:0}
+.rotulo .cell{padding:9px 12px;border-bottom:1px solid var(--rule);border-inline-end:1px solid var(--rule)}
+.rotulo .cell.r,.rotulo .cell.wide{border-inline-end:0}
+.rotulo .cell.wide{grid-column:1 / -1}
+.rotulo .cell.last{border-bottom:0}
+.rotulo dt{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.rotulo dd{margin:2px 0 0;font-weight:600;font-variant-numeric:tabular-nums}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:32px;padding-block:36px 32px}}
+
+/* Sheets */
+main{padding-block:28px 8px}
+.sheet{background:var(--sheet);border:1px solid var(--rule);margin-block:0 28px}
+.sheet-head{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:start;padding:20px 24px;border-bottom:1px solid var(--rule)}
+.sheet-no{font-family:var(--font-mono);font-weight:600;font-size:17px;width:54px;height:54px;display:grid;place-items:center;border:1.5px solid var(--ink)}
+.sheet-head h2{font-size:clamp(28px,3.4vw,40px)}
+.sheet-head p{color:var(--ink-2);margin-top:8px;max-width:72ch}
+.sheet-meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap;padding-top:4px}
+.sheet-body{padding:24px;display:grid;gap:34px}
+.h3{font-size:24px}
+.sub{color:var(--ink-2);font-size:15px;margin-top:6px;max-width:72ch}
+@media (max-width:640px){.sheet-head{grid-template-columns:auto 1fr;padding:16px;gap:14px}.sheet-no{width:44px;height:44px;font-size:15px}.sheet-meta{display:none}.sheet-body{padding:16px;gap:28px}}
+
+/* Figures */
+.fig{margin:0}
+.fig-scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet)}
+.fig svg{display:block;width:100%;height:auto;min-width:860px}
+.fig figcaption{font-size:14px;color:var(--ink-2);margin-top:10px;max-width:84ch}
+.fig figcaption b{color:var(--ink)}
+.fig text{font-family:var(--font-body);fill:var(--ink)}
+.fig .lbl{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;fill:var(--ink-2)}
+.fig .lbl.strong{fill:var(--ink)}
+.fig .tt{font-size:13px;font-weight:600}
+.fig .tm{font-size:12.5px;font-weight:500}
+.fig .ts{font-size:11px;fill:var(--ink-2)}
+.fig .tl{font-size:10.5px;fill:var(--ink-2)}
+.fig .it{font-style:italic}
+.fig .mono-t{font-family:var(--font-mono);font-size:11px;fill:var(--ink)}
+.fig tspan.mono{font-family:var(--font-mono)}
+.fig .hl{fill:var(--warn);font-weight:700}
+.fig .warn-t{fill:var(--warn)}
+.fig .panel-a{fill:var(--paper)}
+.fig .panel-b{fill:var(--sheet)}
+.fig .box{fill:var(--sheet);stroke:var(--steel);stroke-width:1.2}
+.fig .box.dash{stroke-dasharray:5 4}
+.fig .box.adapter{fill:var(--steel-soft)}
+.fig .box.core,.fig .box.hub{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+.fig .box.warn{fill:var(--warn-soft);stroke:var(--warn)}
+.fig .box.paper{fill:var(--paper)}
+.fig .platform{fill:none;stroke:var(--ink);stroke-width:1.6}
+.fig .bus{fill:var(--steel-soft);stroke:var(--steel);stroke-width:1.2}
+.fig .link{stroke:var(--steel);stroke-width:1.4;fill:none}
+.fig .link.accent{stroke:var(--accent);stroke-width:2}
+.fig .bracket{fill:none;stroke:var(--warn);stroke-width:1.4}
+.fig .ah{fill:var(--steel)}
+.fig .ah-accent{fill:var(--accent)}
+
+/* L1 */
+.cols-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.list-mark{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}
+.list-mark li{display:grid;grid-template-columns:14px 1fr;gap:10px;align-items:baseline;font-size:15px}
+.list-mark li::before{content:"";width:9px;height:9px;transform:translateY(1px)}
+.list-mark.ok li::before{background:var(--ok)}
+.list-mark.bad li::before{background:var(--warn)}
+.verdict{border-top:1.5px solid var(--ink);padding-top:14px;font-size:17px;max-width:78ch}
+@media (max-width:760px){.cols-2{grid-template-columns:1fr}}
+
+/* L2 */
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:14px}
+.rule{border-top:1.5px solid var(--ink);padding-top:12px}
+.rule h4{font-size:21px}
+.rule p{color:var(--ink-2);font-size:15px;margin-top:6px}
+.where{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--rule);margin-top:14px}
+.where > div{padding:16px 18px;border-inline-end:1px solid var(--rule);display:grid;gap:8px;align-content:start}
+.where > div:last-child{border-inline-end:0}
+.where h4{font-size:21px}
+.where .tag{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.where .tag.new{color:var(--accent)}
+.where ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:15px;display:grid;gap:2px}
+.where .cost{font-family:var(--font-mono);font-size:12.5px;border-top:1px dashed var(--rule);padding-top:8px;color:var(--ink)}
+.where-note{font-size:14px;color:var(--ink-2);margin-top:10px}
+.stack{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:12px 0 0}
+.stack li{font-family:var(--font-mono);font-size:12.5px;border:1px solid var(--rule);padding:5px 9px;background:var(--paper)}
+@media (max-width:860px){.rules{grid-template-columns:1fr}}
+@media (max-width:760px){.where{grid-template-columns:1fr}.where > div{border-inline-end:0;border-bottom:1px solid var(--rule)}.where > div:last-child{border-bottom:0}}
+
+/* L3 */
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend .sw{width:14px;height:14px;border:1.5px solid var(--accent);background:var(--paper)}
+.legend .sw.n{border-color:var(--rule)}
+.phases{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:30px;align-items:start}
+.phase{position:relative;display:grid;gap:10px;align-content:start}
+.phase:not(:last-child)::after{content:"";position:absolute;top:18px;right:-25px;width:20px;height:16px;background:var(--steel);clip-path:polygon(0 38%,55% 38%,55% 8%,100% 50%,55% 92%,55% 62%,0 62%)}
+.ph-head{display:grid;grid-template-columns:auto 1fr;column-gap:10px;row-gap:2px;border-top:3px solid var(--ink);padding-top:10px}
+.ph-no{grid-row:1 / span 2;font-family:var(--font-mono);font-weight:600;font-size:13px;border:1.5px solid var(--ink);padding:3px 6px;align-self:start}
+.ph-head h3{font-size:22px}
+.ph-h{font-family:var(--font-mono);font-size:13px;color:var(--ink-2)}
+.ph-desc{font-size:14px;color:var(--ink-2)}
+.chips{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.chip{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:baseline;text-decoration:none;border:1px solid var(--rule);background:var(--paper);padding:6px 8px;font-size:13.5px;line-height:1.3}
+.chip b{font-family:var(--font-mono);font-size:12px;font-weight:600}
+.chip i{font-style:normal;font-family:var(--font-mono);font-size:12px;color:var(--ink-2);white-space:nowrap}
+.chip:hover{border-color:var(--steel)}
+.chip.crit{border-color:var(--accent)}
+.chip.crit b{color:var(--accent)}
+.ph-group{display:grid;gap:6px}
+.ph-group-h{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between;gap:8px;margin-top:4px}
+.tracks{display:grid;border-top:1.5px solid var(--ink);margin-top:14px}
+.track{display:grid;grid-template-columns:minmax(200px,290px) 1fr;gap:12px 24px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.track h4{font-size:21px}
+.track-h{font-family:var(--font-mono);font-size:13px;color:var(--ink-2);margin-top:2px}
+.track p{font-size:14px;color:var(--ink-2);margin-top:4px}
+.track .chips{flex-direction:row;flex-wrap:wrap;align-content:start}
+.track .chip{grid-template-columns:auto auto auto}
+@media (max-width:1080px){.phases{grid-template-columns:repeat(2,minmax(0,1fr))}.phase::after{display:none}}
+@media (max-width:620px){.phases{grid-template-columns:1fr}}
+@media (max-width:760px){.track{grid-template-columns:1fr}}
+
+/* L4 */
+.filters{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:end}
+.field{display:grid;gap:4px}
+.field label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+select{font:inherit;font-size:14px;color:var(--ink);background:var(--sheet);border:1px solid var(--rule);padding:7px 10px;border-radius:2px;max-width:100%}
+.check-inline{display:flex;gap:8px;align-items:center;font-size:14px;padding-bottom:8px;cursor:pointer}
+input[type=checkbox]{accent-color:var(--accent);width:17px;height:17px;margin:0;cursor:pointer}
+.visible-meta{font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-inline-start:auto;padding-bottom:9px}
+.tasklist{border:1px solid var(--rule);border-bottom:0}
+.grp{display:flex;gap:12px;align-items:baseline;padding:10px 14px;background:var(--paper);border-bottom:1px solid var(--rule)}
+.grp-no{font-family:var(--font-mono);font-size:12px;font-weight:600}
+.grp-name{font-family:var(--font-display);font-size:19px;font-weight:700}
+.grp-h{margin-inline-start:auto;font-family:var(--font-mono);font-size:12px;color:var(--ink-2);white-space:nowrap}
+.task{display:grid;grid-template-columns:22px 52px minmax(0,1fr) 78px;gap:6px 12px;align-items:start;padding:11px 14px;border-bottom:1px solid var(--rule)}
+.task input{margin-top:3px}
+.task-code{font-family:var(--font-mono);font-weight:600;font-size:13px;padding-top:1px;cursor:pointer}
+.task.is-crit .task-code{color:var(--accent)}
+.task-title{font-size:15px;cursor:pointer;display:block}
+.task-meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.task-meta a{font-family:var(--font-mono);color:var(--ink-2)}
+.task-h{font-family:var(--font-mono);font-size:13px;text-align:end;font-variant-numeric:tabular-nums;padding-top:1px;white-space:nowrap}
+.task.is-sel{background:var(--steel-soft)}
+.task:target{outline:2px solid var(--steel);outline-offset:-2px}
+.flag{font-size:13px;margin-top:6px;display:flex;gap:8px;align-items:baseline;color:var(--ink-2)}
+.flag-k{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border:1px solid;white-space:nowrap}
+.flag-riesgo .flag-k,.flag-dep .flag-k{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.flag-definir .flag-k{color:var(--steel);border-color:var(--steel)}
+.flag-revisar .flag-k{color:var(--ink-2);border-color:var(--ink-3)}
+.empty{padding:20px 14px;color:var(--ink-2);border-bottom:1px solid var(--rule)}
+.summary{position:sticky;bottom:0;z-index:5;background:var(--sheet);border:1.5px solid var(--ink);display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px))}
+.sum-fig{font-family:var(--font-mono);font-size:13px;color:var(--ink-2);display:flex;align-items:baseline;gap:8px}
+.sum-fig strong{font-family:var(--font-display);font-size:30px;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+.sum-warn{font-size:13px;color:var(--warn)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-inline-start:auto}
+.btn{font:600 13px var(--font-body);padding:8px 12px;border:1.5px solid var(--ink);background:var(--sheet);color:var(--ink);border-radius:2px;cursor:pointer}
+.btn:hover{background:var(--steel-soft)}
+.btn.primary{background:var(--ink);color:var(--sheet)}
+.btn.primary:hover{opacity:.88}
+.copy-status{font-size:13px;color:var(--ink-2);flex-basis:100%}
+.copy-status:empty{display:none}
+#copy-fallback{width:100%;min-height:120px;font-family:var(--font-mono);font-size:12px;background:var(--paper);color:var(--ink);border:1px solid var(--rule);padding:8px}
+@media (max-width:620px){
+  .task{grid-template-columns:22px minmax(0,1fr) 62px}
+  .task input{grid-column:1;grid-row:1}
+  .task-code{grid-column:2;grid-row:1}
+  .task-h{grid-column:3;grid-row:1}
+  .task-main{grid-column:2 / span 2;grid-row:2}
+  .visible-meta{margin-inline-start:0;flex-basis:100%;padding-bottom:0}
+  .btns{margin-inline-start:0}
+}
+
+/* L5 */
+.qs{border-top:1.5px solid var(--ink)}
+.q{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,.8fr) minmax(0,1fr) auto;gap:10px 22px;padding:14px 0;border-bottom:1px solid var(--rule);align-items:start}
+.q h3{font-family:var(--font-body);font-size:16px;font-weight:600;line-height:1.35}
+.q p{font-size:14px;color:var(--ink-2);margin-top:4px}
+.q .k{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px}
+.q .who{font-size:14px}
+.codes{display:flex;flex-wrap:wrap;gap:4px}
+.codes a{font-family:var(--font-mono);font-size:12px;text-decoration:none;border:1px solid var(--rule);padding:1px 6px;background:var(--paper)}
+.codes a:hover{border-color:var(--steel)}
+.pill{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border:1px solid var(--warn);color:var(--warn);background:var(--warn-soft);white-space:nowrap}
+@media (max-width:820px){.q{grid-template-columns:minmax(0,1fr) auto}.q .q-main{grid-column:1;grid-row:1}.q .pill{grid-column:2;grid-row:1}.q .who,.q .blocks{grid-column:1 / -1}}
+
+/* L6 */
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;counter-reset:s}
+.steps li{border-top:1.5px solid var(--ink);padding-top:12px;counter-increment:s}
+.steps li::before{content:counter(s);font-family:var(--font-mono);font-weight:600;font-size:13px;display:inline-grid;place-items:center;width:26px;height:26px;border:1.5px solid var(--ink);margin-bottom:10px}
+.steps h4{font-size:21px}
+.steps p{font-size:15px;color:var(--ink-2);margin-top:6px}
+.fronts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--rule);margin-top:14px}
+.front{padding:16px 18px;border-inline-end:1px solid var(--rule);display:grid;gap:8px;align-content:start}
+.front:last-child{border-inline-end:0}
+.front h4{font-size:21px}
+.front .fh{font-family:var(--font-mono);font-size:13px;color:var(--ink-2)}
+.front p{font-size:14px;color:var(--ink-2)}
+.note{font-size:14px;color:var(--ink-2);margin-top:10px;max-width:80ch}
+@media (max-width:860px){.steps,.fronts{grid-template-columns:1fr}.front{border-inline-end:0;border-bottom:1px solid var(--rule)}.front:last-child{border-bottom:0}}
+
+/* Footer */
+.foot{padding-block:4px 48px;font-size:13px;color:var(--ink-3)}
+.foot h2{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.foot ul{margin:8px 0 0;padding-left:18px;display:grid;gap:4px;max-width:92ch}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Láminas del mapa">
+  <div class="wrap nav-inner">
+    <span class="nav-brand">FERRO · P26001 · REV. RA</span>
+    <div class="nav-links">
+      <a href="#l1"><b>L1</b>Situación</a>
+      <a href="#l2"><b>L2</b>Arquitectura</a>
+      <a href="#l3"><b>L3</b>Secuencia</a>
+      <a href="#l4"><b>L4</b>Cómputo</a>
+      <a href="#l5"><b>L5</b>Restricciones</a>
+      <a href="#l6"><b>L6</b>Cómo seguimos</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">AIMBIT × FERRO Ingeniería · Mejora continua de software</p>
+      <h1>La columna vertebral es la <span class="red">base de datos</span></h1>
+      <p class="lead">Un mapa para entender la propuesta de un vistazo, en seis láminas: qué hay hoy, cómo se arma el sistema, en qué orden conviene hacerlo, cuánto suma, qué falta definir con FERRO y cómo repartir el trabajo.</p>
+      <ul class="thesis">
+        <li><span><b>Una sola base</b>, con un código único por obra que comparten la intranet, Bitrix24, Lebane y Drive.</span></li>
+        <li><span><b>Módulos independientes</b> que se suman con el tiempo sin tocar lo que ya funciona.</span></li>
+        <li><span><b>Un adaptador por sistema externo</b>: si uno falla o todavía no existe, el resto sigue funcionando.</span></li>
+      </ul>
+    </div>
+    <aside class="rotulo" aria-label="Rótulo del proyecto">
+      <div class="rotulo-head"><span>Rótulo</span><span>Lámina 0</span></div>
+      <dl>
+        <div class="cell wide"><dt>Cliente</dt><dd>FERRO Ingeniería · Santa Fe</dd></div>
+        <div class="cell"><dt>Proyecto</dt><dd>P26001</dd></div>
+        <div class="cell r"><dt>Presupuesto</dt><dd>C26013-S</dd></div>
+        <div class="cell"><dt>Revisión</dt><dd>RA</dd></div>
+        <div class="cell r"><dt>Fecha</dt><dd>22/09/2026</dd></div>
+        <div class="cell"><dt>Plazo</dt><dd>6 meses</dd></div>
+        <div class="cell r"><dt>Tareas</dt><dd>48</dd></div>
+        <div class="cell wide"><dt>Horas en el menú</dt><dd>808 h + 8 h por mes de servicio</dd></div>
+        <div class="cell"><dt>Obras activas</dt><dd>12</dd></div>
+        <div class="cell r"><dt>Usuarios</dt><dd>18</dd></div>
+        <div class="cell wide last"><dt>Preparado por</dt><dd>AIMBIT · mapa de trabajo interno</dd></div>
+      </dl>
+    </aside>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- L1 -->
+<section class="sheet" id="l1" aria-labelledby="l1-t">
+  <div class="sheet-head">
+    <div class="sheet-no" aria-hidden="true">L1</div>
+    <div>
+      <h2 id="l1-t">Situación actual</h2>
+      <p>Hoy cada dato de FERRO vive en una planilla, un mail o la cabeza de alguien. El prototipo de intranet que entregó FERRO ordena bien los procesos, pero guarda todo en el navegador de cada persona: lo que carga un jefe de obra no lo ve nadie más.</p>
+    </div>
+    <div class="sheet-meta">Lámina 1 de 6</div>
+  </div>
+  <div class="sheet-body">
+    <figure class="fig">
+      <div class="fig-scroll">
+        <svg viewBox="0 0 1040 400" role="img" aria-label="Comparación. Hoy: los datos están repartidos en nueve lugares sin conexión y el código de obra se escribe de formas distintas. Objetivo: una base central con código único de obra, conectada a la intranet, la IA, Bitrix24, los tableros, Lebane, Google Drive, Presto y WhatsApp.">
+          <defs>
+            <marker id="f1-aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="ah-accent"/></marker>
+          </defs>
+          <rect class="panel-a" x="0" y="0" width="470" height="400"/>
+          <text class="lbl strong" x="15" y="28">HOY</text>
+          <text class="ts" x="15" y="47">cada dato en un lugar distinto, sin conexión entre sí</text>
+
+          <rect class="box dash" x="15" y="68" width="140" height="64"/>
+          <text class="tt" x="85" y="95" text-anchor="middle">Planillas Excel</text>
+          <text class="ts" x="85" y="114" text-anchor="middle">una por obra</text>
+          <rect class="box dash" x="165" y="68" width="140" height="64"/>
+          <text class="tt" x="235" y="95" text-anchor="middle">Mails</text>
+          <text class="ts" x="235" y="114" text-anchor="middle">acuerdos y pedidos</text>
+          <rect class="box dash" x="315" y="68" width="140" height="64"/>
+          <text class="tt" x="385" y="95" text-anchor="middle">Cabeza de alguien</text>
+          <text class="ts" x="385" y="114" text-anchor="middle">lo que nadie anotó</text>
+
+          <rect class="box dash" x="15" y="152" width="140" height="64"/>
+          <text class="tt" x="85" y="179" text-anchor="middle">Prototipo HTML</text>
+          <text class="ts" x="85" y="198" text-anchor="middle">datos en cada navegador</text>
+          <rect class="box dash" x="165" y="152" width="140" height="64"/>
+          <text class="tt" x="235" y="179" text-anchor="middle">Bitrix24</text>
+          <text class="ts" x="235" y="198" text-anchor="middle">tareas y CRM</text>
+          <rect class="box dash" x="315" y="152" width="140" height="64"/>
+          <text class="tt" x="385" y="179" text-anchor="middle">Lebane</text>
+          <text class="ts" x="385" y="198" text-anchor="middle">ERP de obra</text>
+
+          <rect class="box dash" x="15" y="236" width="140" height="64"/>
+          <text class="tt" x="85" y="263" text-anchor="middle">Google Drive</text>
+          <text class="ts" x="85" y="282" text-anchor="middle">carpetas con duplicados</text>
+          <rect class="box dash" x="165" y="236" width="140" height="64"/>
+          <text class="tt" x="235" y="263" text-anchor="middle">Presto</text>
+          <text class="ts" x="235" y="282" text-anchor="middle">cómputos</text>
+          <rect class="box dash" x="315" y="236" width="140" height="64"/>
+          <text class="tt" x="385" y="263" text-anchor="middle">Cronogramas</text>
+          <text class="ts" x="385" y="282" text-anchor="middle">archivos XML</text>
+
+          <text class="ts" x="15" y="338">Códigos de obra en el catálogo actual:</text>
+          <text class="mono-t" x="15" y="362">O26003<tspan class="hl">_</tspan>SILVEYRA-PROA</text>
+          <text class="mono-t" x="235" y="362">O26004<tspan class="hl">-</tspan>VITAL-SAN JUSTO</text>
+          <text class="ts" x="15" y="384">guion bajo y guion mezclados en la misma lista</text>
+
+          <line class="link accent" x1="482" y1="200" x2="556" y2="200" marker-end="url(#f1-aa)"/>
+          <text class="lbl strong" x="519" y="188" text-anchor="middle">6 MESES</text>
+
+          <rect class="panel-b" x="570" y="0" width="470" height="400"/>
+          <text class="lbl strong" x="586" y="28">OBJETIVO</text>
+          <text class="ts" x="586" y="47">se carga una vez y se usa en todos lados</text>
+
+          <line class="link" x1="740" y1="168" x2="711" y2="132"/>
+          <line class="link" x1="804" y1="168" x2="804" y2="132"/>
+          <line class="link" x1="868" y1="168" x2="897" y2="132"/>
+          <line class="link" x1="740" y1="200" x2="711" y2="200"/>
+          <line class="link" x1="868" y1="200" x2="897" y2="200"/>
+          <line class="link" x1="740" y1="232" x2="711" y2="268"/>
+          <line class="link" x1="804" y1="232" x2="804" y2="268"/>
+          <line class="link" x1="868" y1="232" x2="897" y2="268"/>
+
+          <rect class="box" x="583" y="68" width="128" height="64"/>
+          <text class="tt" x="647" y="95" text-anchor="middle">Intranet</text>
+          <text class="ts" x="647" y="114" text-anchor="middle">PC y celular</text>
+          <rect class="box" x="740" y="68" width="128" height="64"/>
+          <text class="tt" x="804" y="95" text-anchor="middle">IA</text>
+          <text class="ts" x="804" y="114" text-anchor="middle">lee y transcribe</text>
+          <rect class="box" x="897" y="68" width="128" height="64"/>
+          <text class="tt" x="961" y="95" text-anchor="middle">Bitrix24</text>
+          <text class="ts" x="961" y="114" text-anchor="middle">tareas y avisos</text>
+
+          <rect class="box" x="583" y="168" width="128" height="64"/>
+          <text class="tt" x="647" y="195" text-anchor="middle">Tableros</text>
+          <text class="ts" x="647" y="214" text-anchor="middle">dirección</text>
+          <rect class="box hub" x="740" y="168" width="128" height="64"/>
+          <text class="tt" x="804" y="195" text-anchor="middle">Base central</text>
+          <text class="ts" x="804" y="214" text-anchor="middle">código único</text>
+          <rect class="box" x="897" y="168" width="128" height="64"/>
+          <text class="tt" x="961" y="195" text-anchor="middle">Lebane</text>
+          <text class="ts" x="961" y="214" text-anchor="middle">PMA y previsiones</text>
+
+          <rect class="box" x="583" y="268" width="128" height="64"/>
+          <text class="tt" x="647" y="295" text-anchor="middle">Google Drive</text>
+          <text class="ts" x="647" y="314" text-anchor="middle">carpetas de obra</text>
+          <rect class="box" x="740" y="268" width="128" height="64"/>
+          <text class="tt" x="804" y="295" text-anchor="middle">Presto y XML</text>
+          <text class="ts" x="804" y="314" text-anchor="middle">se importan</text>
+          <rect class="box" x="897" y="268" width="128" height="64"/>
+          <text class="tt" x="961" y="295" text-anchor="middle">WhatsApp</text>
+          <text class="ts" x="961" y="314" text-anchor="middle">audios de obra</text>
+
+          <text class="ts" x="586" y="366">B2 · un solo código por obra en la intranet, Bitrix24, Lebane y Drive</text>
+        </svg>
+      </div>
+      <figcaption><b>El cambio de fondo.</b> A la izquierda, nueve lugares que no se hablan y códigos de obra escritos de distintas formas: el mismo dato se carga dos veces. A la derecha, una base central con un código único por obra, a la que se conecta todo lo demás.</figcaption>
+    </figure>
+
+    <div class="cols-2">
+      <div>
+        <h3 class="h3">Lo que el prototipo ya resuelve</h3>
+        <ul class="list-mark ok">
+          <li>Cinco módulos pensados desde la obra: parte diario, plan semanal con las 5 restricciones y PPC, minutas, base central y usuarios.</li>
+          <li>18 usuarios con 6 roles y permisos por obra, de lectura o de edición.</li>
+          <li>12 obras activas y 24 rubros codificados.</li>
+          <li>Reglas de negocio valiosas: meta de PPC de 85 % y arrastre de tareas no terminadas a la semana siguiente.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="h3">Lo que falla, probado en el navegador</h3>
+        <ul class="list-mark bad">
+          <li>Se corta al iniciar: la tabla de usuarios, la base central y los participantes aparecen vacíos.</li>
+          <li>Usa dos fórmulas de semana distintas: desde el 01/01/2027 el parte no encuentra el plan de su semana en ninguno de los 313 días hábiles del año.</li>
+          <li>El PPC mezcla avances de otras semanas, así que la meta de 85 % no es confiable.</li>
+          <li>No hay servidor: los datos quedan en cada navegador y las contraseñas están escritas en el código.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="verdict"><strong>Conclusión:</strong> el prototipo sirve como especificación de lo que FERRO necesita. No se porta: se reescribe sobre una base de datos real.</p>
+  </div>
+</section>
+
+<!-- L2 -->
+<section class="sheet" id="l2" aria-labelledby="l2-t">
+  <div class="sheet-head">
+    <div class="sheet-no" aria-hidden="true">L2</div>
+    <div>
+      <h2 id="l2-t">Arquitectura: un monolito modular</h2>
+      <p>Una sola aplicación, con módulos separados que comparten un núcleo. Cada sistema externo se conecta a través de su propio adaptador. Así el sistema crece por partes durante los seis meses sin tocar lo que ya funciona.</p>
+    </div>
+    <div class="sheet-meta">Lámina 2 de 6</div>
+  </div>
+  <div class="sheet-body">
+    <figure class="fig">
+      <div class="fig-scroll">
+        <svg viewBox="0 0 1120 660" role="img" aria-label="Arquitectura. Los usuarios entran a una sola aplicación con nueve módulos que comparten un núcleo de obras, usuarios y archivos, guardados en Postgres y Vercel Blob. Los módulos avisan con eventos a seis adaptadores que se conectan con Bitrix24, Lebane, Google Drive, WhatsApp, un modelo de IA y Presto. DonWeb conserva la web, el correo y el DNS, que apunta el subdominio intranet a la aplicación.">
+          <defs>
+            <marker id="f2-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="ah"/></marker>
+            <marker id="f2-aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="ah-accent"/></marker>
+          </defs>
+
+          <text class="lbl" x="20" y="136">USUARIOS</text>
+          <rect class="box" x="20" y="150" width="160" height="60"/>
+          <text class="tt" x="100" y="176" text-anchor="middle">Dirección</text>
+          <text class="ts" x="100" y="195" text-anchor="middle">PC</text>
+          <rect class="box" x="20" y="240" width="160" height="60"/>
+          <text class="tt" x="100" y="266" text-anchor="middle">Jefes de obra</text>
+          <text class="ts" x="100" y="285" text-anchor="middle">celular, sin señal</text>
+          <rect class="box" x="20" y="330" width="160" height="60"/>
+          <text class="tt" x="100" y="356" text-anchor="middle">Oficina técnica</text>
+          <text class="ts" x="100" y="375" text-anchor="middle">compras y admin.</text>
+          <line class="link" x1="180" y1="180" x2="226" y2="180" marker-end="url(#f2-a)"/>
+          <line class="link" x1="180" y1="270" x2="226" y2="270" marker-end="url(#f2-a)"/>
+          <line class="link" x1="180" y1="360" x2="226" y2="360" marker-end="url(#f2-a)"/>
+
+          <rect class="platform" x="230" y="40" width="590" height="470"/>
+          <text class="lbl strong" x="246" y="66">PLATAFORMA FERRO</text>
+          <text class="ts" x="804" y="66" text-anchor="end">una sola app · Next.js en Vercel</text>
+
+          <text class="lbl" x="250" y="94">MÓDULOS</text>
+          <rect class="box" x="250" y="102" width="128" height="52"/>
+          <text class="tm" x="314" y="133" text-anchor="middle">Partes diarios</text>
+          <rect class="box" x="396" y="102" width="128" height="52"/>
+          <text class="tm" x="460" y="125" text-anchor="middle">Planificación</text>
+          <text class="tm" x="460" y="141" text-anchor="middle">y PPC</text>
+          <rect class="box" x="542" y="102" width="128" height="52"/>
+          <text class="tm" x="606" y="133" text-anchor="middle">Minutas</text>
+          <rect class="box" x="250" y="166" width="128" height="52"/>
+          <text class="tm" x="314" y="189" text-anchor="middle">Seguridad</text>
+          <text class="tm" x="314" y="205" text-anchor="middle">e higiene</text>
+          <rect class="box" x="396" y="166" width="128" height="52"/>
+          <text class="tm" x="460" y="197" text-anchor="middle">Proveedores</text>
+          <rect class="box" x="542" y="166" width="128" height="52"/>
+          <text class="tm" x="606" y="189" text-anchor="middle">Precios y</text>
+          <text class="tm" x="606" y="205" text-anchor="middle">cotizaciones</text>
+          <rect class="box" x="250" y="230" width="128" height="52"/>
+          <text class="tm" x="314" y="253" text-anchor="middle">Cronograma y</text>
+          <text class="tm" x="314" y="269" text-anchor="middle">certificación</text>
+          <rect class="box" x="396" y="230" width="128" height="52"/>
+          <text class="tm" x="460" y="253" text-anchor="middle">Comercial</text>
+          <text class="tm" x="460" y="269" text-anchor="middle">y clientes</text>
+          <rect class="box" x="542" y="230" width="128" height="52"/>
+          <text class="tm" x="606" y="261" text-anchor="middle">Tableros</text>
+
+          <text class="ts it" x="460" y="308" text-anchor="middle">cada módulo usa el núcleo; ninguno lee las tablas de otro</text>
+
+          <text class="lbl" x="250" y="330">NÚCLEO COMPARTIDO</text>
+          <rect class="box core" x="250" y="338" width="128" height="56"/>
+          <text class="tt" x="314" y="362" text-anchor="middle">Obras</text>
+          <text class="ts" x="314" y="380" text-anchor="middle">código único</text>
+          <rect class="box core" x="396" y="338" width="128" height="56"/>
+          <text class="tt" x="460" y="362" text-anchor="middle">Usuarios</text>
+          <text class="ts" x="460" y="380" text-anchor="middle">roles y permisos</text>
+          <rect class="box core" x="542" y="338" width="128" height="56"/>
+          <text class="tt" x="606" y="362" text-anchor="middle">Archivos</text>
+          <text class="ts" x="606" y="380" text-anchor="middle">fotos y PDF</text>
+
+          <line class="link" x1="314" y1="394" x2="314" y2="430" marker-end="url(#f2-a)"/>
+          <text class="tl" x="322" y="414">guarda</text>
+          <line class="link" x1="606" y1="394" x2="606" y2="430" marker-end="url(#f2-a)"/>
+          <text class="tl" x="614" y="414">guarda</text>
+          <text class="lbl" x="250" y="426">DATOS</text>
+          <rect class="box" x="250" y="434" width="202" height="52"/>
+          <text class="tt" x="351" y="456" text-anchor="middle">Base Postgres</text>
+          <text class="ts" x="351" y="474" text-anchor="middle">Neon</text>
+          <rect class="box" x="468" y="434" width="202" height="52"/>
+          <text class="tt" x="569" y="456" text-anchor="middle">Fotos y PDF</text>
+          <text class="ts" x="569" y="474" text-anchor="middle">Vercel Blob</text>
+
+          <rect class="bus" x="712" y="102" width="28" height="384"/>
+          <text class="lbl strong" transform="translate(730 294) rotate(-90)" text-anchor="middle">EVENTOS</text>
+          <line class="link" x1="670" y1="192" x2="710" y2="192" marker-end="url(#f2-a)"/>
+          <text class="tl" x="690" y="185" text-anchor="middle">avisan</text>
+
+          <line class="link" x1="740" y1="127" x2="768" y2="127" marker-end="url(#f2-a)"/>
+          <line class="link" x1="740" y1="191" x2="768" y2="191" marker-end="url(#f2-a)"/>
+          <line class="link" x1="740" y1="255" x2="768" y2="255" marker-end="url(#f2-a)"/>
+          <line class="link" x1="740" y1="319" x2="768" y2="319" marker-end="url(#f2-a)"/>
+          <line class="link" x1="740" y1="383" x2="768" y2="383" marker-end="url(#f2-a)"/>
+          <line class="link" x1="740" y1="447" x2="768" y2="447" marker-end="url(#f2-a)"/>
+
+          <text class="lbl" x="770" y="94">ADAPTADORES</text>
+          <rect class="box adapter" x="770" y="102" width="100" height="50"/>
+          <text class="tt" x="820" y="132" text-anchor="middle">Bitrix24</text>
+          <rect class="box warn dash" x="770" y="166" width="100" height="50"/>
+          <text class="tt" x="820" y="196" text-anchor="middle">Lebane</text>
+          <rect class="box adapter" x="770" y="230" width="100" height="50"/>
+          <text class="tt" x="820" y="260" text-anchor="middle">Drive</text>
+          <rect class="box adapter" x="770" y="294" width="100" height="50"/>
+          <text class="tt" x="820" y="324" text-anchor="middle">WhatsApp</text>
+          <rect class="box adapter" x="770" y="358" width="100" height="50"/>
+          <text class="tt" x="820" y="388" text-anchor="middle">IA</text>
+          <rect class="box adapter" x="770" y="422" width="100" height="50"/>
+          <text class="tt" x="820" y="452" text-anchor="middle">Presto · XML</text>
+
+          <line class="link" x1="872" y1="127" x2="948" y2="127" marker-start="url(#f2-a)" marker-end="url(#f2-a)"/>
+          <text class="tl" x="910" y="120" text-anchor="middle">ida y vuelta</text>
+          <line class="link" x1="872" y1="191" x2="948" y2="191" marker-end="url(#f2-a)"/>
+          <text class="tl" x="910" y="184" text-anchor="middle">genera PMA</text>
+          <line class="link" x1="872" y1="255" x2="948" y2="255" marker-end="url(#f2-a)"/>
+          <text class="tl" x="910" y="248" text-anchor="middle">lee carpetas</text>
+          <line class="link" x1="948" y1="319" x2="872" y2="319" marker-end="url(#f2-a)"/>
+          <text class="tl" x="910" y="312" text-anchor="middle">manda audios</text>
+          <line class="link" x1="872" y1="383" x2="948" y2="383" marker-end="url(#f2-a)"/>
+          <text class="tl" x="910" y="376" text-anchor="middle">consulta</text>
+          <line class="link" x1="948" y1="447" x2="872" y2="447" marker-end="url(#f2-a)"/>
+          <text class="tl" x="910" y="440" text-anchor="middle">importa</text>
+
+          <text class="lbl" x="950" y="94">SISTEMAS EXTERNOS</text>
+          <rect class="box" x="950" y="102" width="160" height="50"/>
+          <text class="tt" x="1030" y="123" text-anchor="middle">Bitrix24</text>
+          <text class="ts" x="1030" y="140" text-anchor="middle">tareas y grupos de obra</text>
+          <rect class="box warn dash" x="950" y="166" width="160" height="50"/>
+          <text class="tt" x="1030" y="187" text-anchor="middle">Lebane</text>
+          <text class="ts warn-t" x="1030" y="204" text-anchor="middle">API a confirmar</text>
+          <rect class="box" x="950" y="230" width="160" height="50"/>
+          <text class="tt" x="1030" y="251" text-anchor="middle">Google Drive</text>
+          <text class="ts" x="1030" y="268" text-anchor="middle">carpetas de obra</text>
+          <rect class="box" x="950" y="294" width="160" height="50"/>
+          <text class="tt" x="1030" y="315" text-anchor="middle">WhatsApp</text>
+          <text class="ts" x="1030" y="332" text-anchor="middle">audios de obra</text>
+          <rect class="box" x="950" y="358" width="160" height="50"/>
+          <text class="tt" x="1030" y="379" text-anchor="middle">Modelo de IA</text>
+          <text class="ts" x="1030" y="396" text-anchor="middle">transcribe y lee PDFs</text>
+          <rect class="box" x="950" y="422" width="160" height="50"/>
+          <text class="tt" x="1030" y="443" text-anchor="middle">Presto y cronogramas</text>
+          <text class="ts" x="1030" y="460" text-anchor="middle">cómputos y XML</text>
+
+          <rect class="box dash paper" x="230" y="560" width="590" height="84"/>
+          <text class="lbl strong" x="246" y="582">DONWEB · LO QUE YA PAGAN, SE QUEDA</text>
+          <rect class="box" x="246" y="594" width="250" height="40"/>
+          <text class="tt" x="371" y="610" text-anchor="middle">Sitio WordPress</text>
+          <text class="ts" x="371" y="626" text-anchor="middle">lo administra un tercero</text>
+          <rect class="box" x="510" y="594" width="120" height="40"/>
+          <text class="tt" x="570" y="619" text-anchor="middle">Correo</text>
+          <rect class="box" x="644" y="594" width="160" height="40"/>
+          <text class="tt" x="724" y="610" text-anchor="middle">DNS</text>
+          <text class="ts" x="724" y="626" text-anchor="middle">ferroingenieria.com.ar</text>
+          <line class="link accent" x1="724" y1="592" x2="724" y2="515" marker-end="url(#f2-aa)"/>
+          <text class="tl" x="714" y="542" text-anchor="end"><tspan class="mono">intranet.ferroingenieria.com.ar</tspan> apunta a la app</text>
+        </svg>
+      </div>
+      <figcaption><b>Planta de la plataforma.</b> Todos los módulos usan el mismo núcleo: obras, usuarios y archivos. Cuando pasa algo importante, el módulo lo avisa con un evento y cada adaptador lo traduce para su sistema. Si un adaptador falla o todavía no existe, como Lebane mientras no se confirme su API, el resto sigue funcionando. DonWeb se queda con la web, el correo y el DNS.</figcaption>
+    </figure>
+
+    <div>
+      <h3 class="h3">Tres reglas para que sea modular</h3>
+      <div class="rules">
+        <div class="rule"><h4>El núcleo no conoce a Bitrix24</h4><p>Los módulos solo anuncian lo que pasó, por ejemplo «se registró un parte». Cada adaptador decide qué hacer en su sistema. Sumar una integración nueva es escribir un adaptador, sin tocar el núcleo.</p></div>
+        <div class="rule"><h4>La obra es la pieza central</h4><p>Cada obra tiene un código y una tabla de equivalencias: su proyecto en Bitrix24, su proyecto en Lebane y su carpeta de Drive. Eso es la tarea B2.</p></div>
+        <div class="rule"><h4>Cada módulo, su espacio</h4><p>Carpeta, tablas y tests propios. Se comunica con los demás por interfaces claras, nunca leyendo ni escribiendo tablas ajenas.</p></div>
+      </div>
+    </div>
+
+    <figure class="fig">
+      <div class="fig-scroll">
+        <svg viewBox="0 0 1120 300" role="img" aria-label="Recorrido de un parte diario: se carga en obra desde el celular, queda guardado en el teléfono si no hay señal, se sincroniza al volver la señal, se guarda en la base con fotos y PDF, y se anuncia el evento parte registrado. A ese evento reaccionan por separado Bitrix24, el plan semanal y los rendimientos.">
+          <defs>
+            <marker id="f3-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="ah"/></marker>
+            <marker id="f3-aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="ah-accent"/></marker>
+          </defs>
+          <text class="lbl strong" x="20" y="30">UN PARTE DIARIO, DE PUNTA A PUNTA</text>
+
+          <rect class="box" x="20" y="117" width="136" height="76"/>
+          <text class="lbl" x="30" y="136">1</text>
+          <text class="tt" x="88" y="160" text-anchor="middle">Carga en obra</text>
+          <text class="ts" x="88" y="178" text-anchor="middle">celular, fotos, voz</text>
+          <rect class="box dash" x="206" y="117" width="136" height="76"/>
+          <text class="lbl" x="216" y="136">2</text>
+          <text class="tt" x="274" y="160" text-anchor="middle">Sin señal</text>
+          <text class="ts" x="274" y="178" text-anchor="middle">queda en el teléfono</text>
+          <rect class="box" x="392" y="117" width="136" height="76"/>
+          <text class="lbl" x="402" y="136">3</text>
+          <text class="tt" x="460" y="160" text-anchor="middle">Vuelve la señal</text>
+          <text class="ts" x="460" y="178" text-anchor="middle">se sincroniza solo</text>
+          <rect class="box" x="578" y="117" width="136" height="76"/>
+          <text class="lbl" x="588" y="136">4</text>
+          <text class="tt" x="646" y="160" text-anchor="middle">Se guarda</text>
+          <text class="ts" x="646" y="178" text-anchor="middle">base, fotos y PDF</text>
+          <rect class="box hub" x="764" y="117" width="136" height="76"/>
+          <text class="lbl" x="774" y="136">5</text>
+          <text class="tt" x="832" y="160" text-anchor="middle">Parte registrado</text>
+          <text class="ts" x="832" y="178" text-anchor="middle">evento</text>
+
+          <line class="link" x1="156" y1="155" x2="204" y2="155" marker-end="url(#f3-a)"/>
+          <text class="tl" x="180" y="147" text-anchor="middle">sin red</text>
+          <line class="link" x1="342" y1="155" x2="390" y2="155" marker-end="url(#f3-a)"/>
+          <text class="tl" x="366" y="147" text-anchor="middle">espera</text>
+          <line class="link" x1="528" y1="155" x2="576" y2="155" marker-end="url(#f3-a)"/>
+          <text class="tl" x="552" y="147" text-anchor="middle">sube</text>
+          <line class="link accent" x1="714" y1="155" x2="762" y2="155" marker-end="url(#f3-aa)"/>
+          <text class="tl" x="738" y="147" text-anchor="middle">avisa</text>
+
+          <line class="link accent" x1="900" y1="155" x2="958" y2="62" marker-end="url(#f3-aa)"/>
+          <line class="link accent" x1="900" y1="155" x2="958" y2="155" marker-end="url(#f3-aa)"/>
+          <line class="link accent" x1="900" y1="155" x2="958" y2="248" marker-end="url(#f3-aa)"/>
+          <rect class="box" x="960" y="30" width="150" height="60"/>
+          <text class="tt" x="1035" y="56" text-anchor="middle">Bitrix24</text>
+          <text class="ts" x="1035" y="74" text-anchor="middle">aviso en el grupo</text>
+          <rect class="box" x="960" y="125" width="150" height="60"/>
+          <text class="tt" x="1035" y="151" text-anchor="middle">Plan semanal</text>
+          <text class="ts" x="1035" y="169" text-anchor="middle">avance y PPC</text>
+          <rect class="box" x="960" y="220" width="150" height="60"/>
+          <text class="tt" x="1035" y="246" text-anchor="middle">Rendimientos</text>
+          <text class="ts" x="1035" y="264" text-anchor="middle">dotación vs. avance</text>
+
+          <path class="bracket" d="M20 206 V216 H528 V206"/>
+          <text class="ts warn-t" x="20" y="240">Modo sin señal: el tramo más delicado. Conviene estimarlo aparte de las 32 h de B1.</text>
+        </svg>
+      </div>
+      <figcaption><b>Así se ve la modularidad en un caso real.</b> El paso 5 es la clave: el módulo de partes solo anuncia que se registró un parte. Bitrix24, el plan semanal y los rendimientos reaccionan cada uno por su lado; si Bitrix24 no responde, el parte igual queda guardado.</figcaption>
+    </figure>
+
+    <div>
+      <h3 class="h3">Dónde vive cada cosa</h3>
+      <div class="where">
+        <div>
+          <span class="tag">Se queda</span>
+          <h4>DonWeb</h4>
+          <ul><li>Sitio WordPress, que administra un tercero</li><li>Correo de la empresa</li><li>DNS del dominio</li></ul>
+          <p class="cost">Vence el 08/07/2027: ahí se decide qué se renueva</p>
+        </div>
+        <div>
+          <span class="tag new">Nuevo</span>
+          <h4>Vercel</h4>
+          <ul><li>La aplicación: intranet, API y tareas de fondo</li><li>Subdominio intranet.ferroingenieria.com.ar</li></ul>
+          <p class="cost">Plan Pro: USD 20 por desarrollador por mes</p>
+        </div>
+        <div>
+          <span class="tag new">Nuevo</span>
+          <h4>Neon y Vercel Blob</h4>
+          <ul><li>Base Postgres, con búsqueda para la IA</li><li>Fotos de obra y PDF de los partes</li></ul>
+          <p class="cost">Neon arranca gratis · fotos ≈ USD 0,023 por GB por mes</p>
+        </div>
+      </div>
+      <p class="where-note">Todas las cuentas van a nombre de FERRO. Estimado inicial: USD 20 a 35 por mes, sin contar lo que ya pagan en DonWeb.</p>
+      <ul class="stack" aria-label="Tecnologías">
+        <li>Next.js y TypeScript</li><li>Postgres</li><li>App instalable que funciona sin señal</li><li>Roles y permisos por obra</li><li>Eventos y adaptadores</li><li>Tests sobre semanas y PPC</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- L3 -->
+<section class="sheet" id="l3" aria-labelledby="l3-t">
+  <div class="sheet-head">
+    <div class="sheet-no" aria-hidden="true">L3</div>
+    <div>
+      <h2 id="l3-t">Secuencia de montaje</h2>
+      <p>La propuesta pide ordenar por lo que habilita, no por tamaño. Cada fase deja lista la base que necesita la siguiente. Los recuadros rojos marcan la ruta crítica de la propuesta: base y código de obra, partes diarios, relevamiento de Bitrix24 y Lebane, base de precios.</p>
+    </div>
+    <div class="sheet-meta">Lámina 3 de 6</div>
+  </div>
+  <div class="sheet-body">
+    <div class="legend"><span><i class="sw" aria-hidden="true"></i>Ruta crítica</span><span><i class="sw n" aria-hidden="true"></i>Resto de las tareas · cada código lleva a su detalle en la lámina 4</span></div>
+    <div class="phases" id="phases"></div>
+    <div>
+      <h3 class="h3">Líneas en paralelo</h3>
+      <p class="sub">Arrancan cuando está lista la fase F0 y avanzan a su ritmo, cada tarea detrás de la base que necesita.</p>
+      <div class="tracks" id="tracks"></div>
+    </div>
+  </div>
+</section>
+
+<!-- L4 -->
+<section class="sheet" id="l4" aria-labelledby="l4-t">
+  <div class="sheet-head">
+    <div class="sheet-no" aria-hidden="true">L4</div>
+    <div>
+      <h2 id="l4-t">Cómputo de tareas</h2>
+      <p>Las 48 tareas de la propuesta con su código, fase, módulo y dependencias. Marcar las tareas de un mes muestra cuántas horas suman; la selección queda guardada en este navegador. Arranca con una sugerencia de ejemplo: la fase F0 más el relevamiento de Bitrix24 y Lebane.</p>
+    </div>
+    <div class="sheet-meta">Lámina 4 de 6</div>
+  </div>
+  <div class="sheet-body">
+    <div class="filters">
+      <div class="field"><label for="f-area">Área</label><select id="f-area"><option value="">Todas las áreas</option></select></div>
+      <div class="field"><label for="f-fase">Fase o línea</label><select id="f-fase"><option value="">Todas</option></select></div>
+      <div class="field"><label for="f-frente">Frente de trabajo</label><select id="f-frente"><option value="">Todos</option><option value="A">A · App y operación en obra</option><option value="B">B · Integraciones y planificación</option><option value="C">C · Datos, cotización e IA</option></select></div>
+      <label class="check-inline" for="f-sel"><input type="checkbox" id="f-sel"> Solo marcadas</label>
+      <span class="visible-meta" id="visible-meta"></span>
+    </div>
+    <div>
+      <div class="tasklist" id="task-list"></div>
+      <div class="summary">
+        <div class="sum-fig" aria-live="polite"><strong id="sum-hours">0 h</strong><span id="sum-count">0 tareas marcadas</span></div>
+        <span class="sum-warn" id="sum-warn" hidden></span>
+        <div class="btns">
+          <button class="btn" id="btn-suggest" type="button">Usar sugerencia</button>
+          <button class="btn" id="btn-clear" type="button">Vaciar</button>
+          <button class="btn primary" id="btn-copy" type="button">Copiar selección</button>
+        </div>
+        <p class="copy-status" id="copy-status" role="status"></p>
+        <textarea id="copy-fallback" hidden readonly aria-label="Selección en texto para copiar"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- L5 -->
+<section class="sheet" id="l5" aria-labelledby="l5-t">
+  <div class="sheet-head">
+    <div class="sheet-no" aria-hidden="true">L5</div>
+    <div>
+      <h2 id="l5-t">Restricciones a levantar</h2>
+      <p>Como en el plan semanal de obra, una tarea no se libera hasta levantar sus restricciones. Estas son las preguntas abiertas, quién las responde y qué tareas condiciona cada una.</p>
+    </div>
+    <div class="sheet-meta">Lámina 5 de 6</div>
+  </div>
+  <div class="sheet-body">
+    <div class="qs">
+      <div class="q"><div class="q-main"><h3>¿Lebane deja entrar y sacar datos?</h3><p>Es el mayor riesgo técnico. En una búsqueda rápida no apareció documentación pública de su API; las integraciones se piden a su equipo.</p></div><div class="who"><span class="k">Responde</span>FERRO con Lebane</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-X2">X2</a><a href="#t-X3">X3</a><a href="#t-X4">X4</a><a href="#t-P3">P3</a><a href="#t-P4">P4</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿El plan de Bitrix24 contratado permite integrarse?</h3><p>Sin webhooks ni API no hay avisos automáticos ni minutas que se conviertan en tareas.</p></div><div class="who"><span class="k">Responde</span>Quien administra Bitrix24 en FERRO</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-B3">B3</a><a href="#t-B4">B4</a><a href="#t-X1">X1</a><a href="#t-X2">X2</a><a href="#t-X3">X3</a><a href="#t-X4">X4</a><a href="#t-W1">W1</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿Con qué programa se hacen los cronogramas en XML?</h3><p>Define cómo se construye el importador y qué datos trae.</p></div><div class="who"><span class="k">Responde</span>Ingeniería de FERRO</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-P1">P1</a><a href="#t-P3">P3</a><a href="#t-P4">P4</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿Quién cuenta cómo trabaja cada área?</h3><p>Obra, compras, administración e ingeniería. Sin interlocutores, el relevamiento no arranca.</p></div><div class="who"><span class="k">Responde</span>Dirección de FERRO</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-O4">O4</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿A nombre de quién van el dominio, Vercel y la base?</h3><p>Los paga FERRO directo al proveedor y no están en el abono. Tienen que quedar a su nombre.</p></div><div class="who"><span class="k">Responde</span>Dirección de FERRO</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-B1">B1</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿Cómo se calcula hoy el PPC y qué día empieza la semana?</h3><p>El prototipo usa dos fórmulas de semana y mezcla avances de semanas distintas.</p></div><div class="who"><span class="k">Responde</span>Dirección y jefes de obra</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-P2">P2</a><a href="#t-B8">B8</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿El modo sin señal entra en las 32 h de B1?</h3><p>Sincronizar sin conexión es lo más fácil de subestimar. Conviene separarlo o acotarlo.</p></div><div class="who"><span class="k">Responde</span>AIMBIT con FERRO</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-B1">B1</a><a href="#t-B3">B3</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿Se puede corregir un parte ya enviado? ¿Quién?</h3><p>Hoy un parte no se puede editar ni anular, y cualquiera puede cargarlo a nombre de otro jefe.</p></div><div class="who"><span class="k">Responde</span>Dirección de FERRO</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-B3">B3</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>El rediseño de la web, ¿lo hace AIMBIT o quien la administra hoy?</h3><p>El sitio WordPress lo maneja un tercero. El link a la intranet y el formulario también se coordinan con esa persona.</p></div><div class="who"><span class="k">Responde</span>Dueño de FERRO</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-W3">W3</a><a href="#t-W1">W1</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿Se pasa el DNS a Cloudflare cuando venza DonWeb?</h3><p>Hoy el DNS está en DonWeb: si DonWeb se cae, la intranet deja de encontrarse aunque Vercel funcione.</p></div><div class="who"><span class="k">Responde</span>FERRO, antes del 08/07/2027</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-B1">B1</a></div></div><span class="pill">Abierta</span></div>
+      <div class="q"><div class="q-main"><h3>¿El Drive de la empresa es de Google Workspace?</h3><p>Si lo es, el correo puede pasar ahí sin costo extra y el buscador del Drive usa la misma cuenta.</p></div><div class="who"><span class="k">Responde</span>FERRO</div><div class="blocks"><span class="k">Condiciona</span><div class="codes"><a href="#t-IA3">IA3</a><a href="#t-O1">O1</a></div></div><span class="pill">Abierta</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- L6 -->
+<section class="sheet" id="l6" aria-labelledby="l6-t">
+  <div class="sheet-head">
+    <div class="sheet-no" aria-hidden="true">L6</div>
+    <div>
+      <h2 id="l6-t">Cómo seguimos</h2>
+      <p>De este mapa al trabajo de todos los días, y una forma posible de repartirlo entre tres.</p>
+    </div>
+    <div class="sheet-meta">Lámina 6 de 6</div>
+  </div>
+  <div class="sheet-body">
+    <ol class="steps">
+      <li><h4>Acordar este mapa</h4><p>Revisar entre los tres las fases, las horas y las restricciones, y ajustar lo necesario antes de hablar con FERRO.</p></li>
+      <li><h4>Pasar el cómputo a GitHub Projects</h4><p>Un issue por código (B3, X1…), una etiqueta por módulo y un milestone por fase. «Copiar selección», en la lámina 4, arma la lista.</p></li>
+      <li><h4>Priorizar cada mes con FERRO</h4><p>Con las 8 h mensuales de servicio: elegir qué entra, capacitar cada entrega y dar soporte.</p></li>
+    </ol>
+    <div>
+      <h3 class="h3">Frentes de trabajo sugeridos</h3>
+      <div class="fronts">
+        <div class="front"><h4>A · App y operación en obra</h4><span class="fh">274 h</span><p>La intranet de todos los días: base, partes, plan semanal, minutas, seguridad e higiene y tableros.</p><div class="codes"><a href="#t-B1">B1</a><a href="#t-B2">B2</a><a href="#t-O2">O2</a><a href="#t-O4">O4</a><a href="#t-B3">B3</a><a href="#t-P2">P2</a><a href="#t-B4">B4</a><a href="#t-B5">B5</a><a href="#t-S1">S1</a><a href="#t-S2">S2</a><a href="#t-S3">S3</a><a href="#t-S4">S4</a><a href="#t-S5">S5</a><a href="#t-W2">W2</a><a href="#t-W5">W5</a><a href="#t-O3">O3</a></div></div>
+        <div class="front"><h4>B · Integraciones y planificación</h4><span class="fh">202 h</span><p>Todo lo que habla con otros sistemas: Bitrix24, Lebane, la web, los cronogramas y Presto.</p><div class="codes"><a href="#t-X1">X1</a><a href="#t-X2">X2</a><a href="#t-X3">X3</a><a href="#t-X4">X4</a><a href="#t-W1">W1</a><a href="#t-W3">W3</a><a href="#t-P1">P1</a><a href="#t-P3">P3</a><a href="#t-P4">P4</a><a href="#t-C5">C5</a><a href="#t-C7">C7</a><a href="#t-IA2">IA2</a></div></div>
+        <div class="front"><h4>C · Datos, cotización e IA</h4><span class="fh">332 h</span><p>Las bases de conocimiento y lo que las usa: precios, proveedores, cotizador, predimensionamiento e IA.</p><div class="codes"><a href="#t-O1">O1</a><a href="#t-B6">B6</a><a href="#t-B7">B7</a><a href="#t-B8">B8</a><a href="#t-B9">B9</a><a href="#t-C1">C1</a><a href="#t-C2">C2</a><a href="#t-C3">C3</a><a href="#t-C4">C4</a><a href="#t-C6">C6</a><a href="#t-D1">D1</a><a href="#t-D2">D2</a><a href="#t-D3">D3</a><a href="#t-IA1">IA1</a><a href="#t-IA3">IA3</a><a href="#t-IA4">IA4</a><a href="#t-IA5">IA5</a><a href="#t-IA6">IA6</a><a href="#t-W4">W4</a></div></div>
+      </div>
+      <p class="note">Es una sugerencia para discutir. El frente C es el más pesado, pero arranca más tarde: conviene sumarle manos cuando el frente A esté estable. Las 8 h mensuales de servicio (O5) son de los tres.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="wrap foot">
+  <h2>Fuentes y notas</h2>
+  <ul>
+    <li>Tareas y horas: propuesta AIMBIT P26001, presupuesto C26013-S, revisión RA, 22/09/2026. Los códigos (B1…O5), las fases (F0…F4) y los frentes son una propuesta de AIMBIT para ordenar el trabajo; el documento original no los numera.</li>
+    <li>B3 figura con 24 h: en el texto copiado de la propuesta, el número quedó junto a «Bitrix». Conviene confirmarlo con el original.</li>
+    <li>Prototipo revisado: index 260922.html (2.860 líneas), ejecutado en el navegador el 27/09/2026.</li>
+    <li>Costos de Vercel y Neon tomados de sus páginas oficiales en septiembre de 2026.</li>
+  </ul>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var AREAS = {
+    B: "Base de datos e intranet",
+    P: "Planificación y certificación",
+    C: "Compras y cotizaciones",
+    X: "Bitrix24 y Lebane",
+    S: "Calidad, SyH y clientes",
+    W: "Comercial y web",
+    D: "Predimensionamiento",
+    IA: "Automatizaciones con IA",
+    O: "Orden, resguardo y servicio"
+  };
+
+  var FASES = [
+    { id: "F0", kind: "fase", name: "Cimientos", desc: "Base central, código único de obra y resguardo. Sin esto, todo se sigue cargando dos veces." },
+    { id: "F1", kind: "fase", name: "Datos de todos los días", desc: "Los partes empiezan a cargar datos reales. De ahí salen los rendimientos para cotizar." },
+    { id: "F2", kind: "fase", name: "Conexiones", desc: "El relevamiento define qué se automatiza en Bitrix24 y Lebane, y habilita los flujos." },
+    { id: "F3", kind: "fase", name: "Bases de conocimiento", desc: "Precios, proveedores, rendimientos y costos: lo que después usan las herramientas." },
+    { id: "F4", kind: "fase", name: "Herramientas", desc: "Cotizar, certificar, predimensionar y decidir con tableros, sobre las bases ya cargadas." },
+    { id: "SYH", kind: "track", name: "Seguridad, higiene y calidad", desc: "Arranca después de F0. El control de subcontratistas espera la base de proveedores (B6)." },
+    { id: "IA", kind: "track", name: "Automatizaciones con IA", desc: "Cada una va detrás de la base que usa: la minuta por audio detrás de B4, el parte por voz detrás de B3." },
+    { id: "COM", kind: "track", name: "Comercial y web", desc: "Fichas y oportunidades cuando exista la base. El rediseño de la web depende de un acuerdo con quien la administra." },
+    { id: "M", kind: "track", name: "Servicio continuo", desc: "Todos los meses: priorizar con FERRO, capacitar cada entrega y dar soporte." }
+  ];
+
+  var FLAG_LABEL = { riesgo: "Riesgo", definir: "A definir", revisar: "Revisar" };
+
+  function T(id, area, fase, mod, fr, h, s, t, deps, extra) {
+    var o = { id: id, area: area, fase: fase, mod: mod, fr: fr, h: h, s: s, t: t, deps: deps || [] };
+    if (extra) { for (var k in extra) { o[k] = extra[k]; } }
+    return o;
+  }
+
+  var TASKS = [
+    T("O4", "O", "F0", "Relevamiento", "A", 12, "Relevamiento por áreas", "Relevamiento inicial por áreas: obra, compras, administración e ingeniería", []),
+    T("B1", "B", "F0", "Núcleo", "A", 32, "Base central e intranet", "Base de datos central e intranet en producción: usuarios y claves reales, y uso en el celular sin señal", [], { crit: true, flag: { k: "revisar", t: "El modo sin señal difícilmente entra en 32 h: separarlo o acotarlo." } }),
+    T("B2", "B", "F0", "Núcleo · Obras", "A", 12, "Código único de obra", "Un solo código por obra en la intranet, Bitrix24, Lebane y Drive", ["B1"], { crit: true }),
+    T("O2", "O", "F0", "Núcleo", "A", 8, "Backup con restauración", "Copia de seguridad automática, con prueba de restauración", ["B1"], { flag: { k: "revisar", t: "Guardar la copia fuera del proveedor de la base." } }),
+
+    T("B3", "B", "F1", "Partes diarios", "A", 24, "Partes diarios", "Partes diarios en obra: carga desde el celular con fotos, PDF automático y aviso en el grupo de Bitrix24", ["B1", "B2"], { crit: true, flag: { k: "definir", t: "Si un parte enviado se puede corregir, y quién." } }),
+    T("P2", "P", "F1", "Planificación y PPC", "A", 18, "Plan semanal y PPC", "Planificación semanal del jefe de obra en la intranet, contra el cronograma", ["B1", "B2"], { flag: { k: "revisar", t: "Corregir las reglas de semana y PPC del prototipo." } }),
+
+    T("X1", "X", "F2", "Adaptadores", "B", 10, "Relevamiento Bitrix24 y Lebane", "Relevar qué se puede automatizar en Bitrix24 y Lebane, y qué habilita el plan contratado de cada uno", [], { crit: true }),
+    T("B4", "B", "F2", "Minutas", "A", 20, "Minutas → tareas", "Minutas de reunión: cada definición se convierte en tarea de Bitrix24 y el avance vuelve a la minuta", ["B1", "X1"]),
+    T("X3", "X", "F2", "Adaptadores", "B", 8, "Previsiones del 10 y el 25", "Previsiones del 10 y el 25 generadas solas, con aviso en el grupo de cada obra", ["X1", "B2"], { flag: { k: "riesgo", t: "Depende de lo que permita Lebane." } }),
+    T("X2", "X", "F2", "Adaptadores", "B", 22, "Tarea → PMA", "Flujo tarea → PMA: la tarea genera el PMA en Lebane desde el cómputo, lo sube a la tarea y lo asigna al responsable", ["X1", "B2"], { flag: { k: "riesgo", t: "API de Lebane sin confirmar." } }),
+    T("X4", "X", "F2", "Adaptadores", "B", 24, "Otros flujos Bitrix24–Lebane", "El resto de los flujos repetitivos entre Bitrix24 y Lebane", ["X1"], { flag: { k: "riesgo", t: "API de Lebane sin confirmar." } }),
+    T("W1", "W", "F2", "Adaptadores", "B", 14, "Acceso web y formulario", "Acceso a la intranet desde la web, y consultas del formulario entrando solas a Bitrix24", ["B1", "X1"], { flag: { k: "definir", t: "Coordinar con quien administra la web." } }),
+
+    T("O1", "O", "F3", "Adaptadores · Drive", "C", 10, "Orden del Drive", "Limpiar los duplicados del Drive y fijar cómo se nombran las cosas", ["B2"]),
+    T("B7", "B", "F3", "Precios y cotizaciones", "C", 24, "Base de precios", "Base de precios: extraer los precios de las carpetas de obra y de las cotizaciones", ["B2", "O1"], { crit: true }),
+    T("B6", "B", "F3", "Proveedores", "C", 18, "Proveedores y subcontratistas", "Base de proveedores y subcontratistas: rubro, zona, calificación y documentación vigente", ["B1"]),
+    T("B8", "B", "F3", "Precios y cotizaciones", "C", 18, "Rendimientos reales", "Base de rendimientos reales, calculada desde los partes diarios: dotación contra avance", ["B3"]),
+    T("B9", "B", "F3", "Precios y cotizaciones", "C", 16, "Costo horario", "Costo horario de mano de obra y de equipos, actualizado desde las escalas y el horómetro del parte", ["B3"]),
+
+    T("P1", "P", "F4", "Cronograma y certificación", "B", 24, "Cronograma XML", "Importar el cronograma en XML y vincularlo con la oferta y el cómputo", ["B2"], { flag: { k: "definir", t: "Con qué programa se hacen los cronogramas." } }),
+    T("P3", "P", "F4", "Cronograma y certificación", "B", 26, "Curva de inversión", "Curva de inversión dinámica, con recálculo automático por AROs y cambios del cronograma base", ["P1", "B7"]),
+    T("P4", "P", "F4", "Cronograma y certificación", "B", 24, "Certificación", "Certificación de obra: contratado contra certificado, avance y redeterminación de precios por índice", ["P1", "B7"]),
+    T("C1", "C", "F4", "Precios y cotizaciones", "C", 22, "Pedido de presupuesto", "Pedido de presupuesto automático por rubro y zona, con seguimiento de respuestas", ["B6"]),
+    T("C2", "C", "F4", "Precios y cotizaciones", "C", 24, "Comparativas", "Comparativas automáticas de subcontratos, materiales y equipos, con las ofertas llevadas a la misma unidad", ["B6", "B7"]),
+    T("C3", "C", "F4", "Precios y cotizaciones", "C", 28, "Cotizador de licitaciones", "Cotizador de licitaciones chicas a partir de los ítems más incidentes de las licitaciones ganadas", ["B7"]),
+    T("C4", "C", "F4", "Precios y cotizaciones", "C", 20, "Cierre de cotización", "Cierre de cotización armado solo desde el cómputo y la base de precios", ["B7", "C7"]),
+    T("C5", "C", "F4", "Precios y cotizaciones", "B", 10, "Notas de pedido", "Notas de pedido automáticas desde la documentación subida a la carpeta de obra", ["B2", "O1"]),
+    T("C6", "C", "F4", "Precios y cotizaciones", "C", 12, "Cotizaciones vigentes", "Tablero de cotizaciones vigentes, con la validez de 30 días y avisos", ["C1"]),
+    T("C7", "C", "F4", "Adaptadores · Presto", "B", 12, "Cómputos de Presto", "Importar los cómputos de Presto sin rearmarlos a mano", ["B2"]),
+    T("D1", "D", "F4", "Precios y cotizaciones", "C", 22, "Estructura metálica", "Predimensionamiento de estructura metálica: kg según luz libre, cantidad de pisos y destino", ["B7"]),
+    T("D2", "D", "F4", "Precios y cotizaciones", "C", 20, "Hormigón e hidráulica", "Predimensionamiento de hormigón e hidráulica: canaletas y subterráneos", ["B7"]),
+    T("D3", "D", "F4", "Precios y cotizaciones", "C", 20, "Órdenes de inversión", "Órdenes de inversión por m², tipo de estructura, terminaciones y carpintería", ["B7"]),
+    T("W5", "W", "F4", "Tableros", "A", 24, "Tableros de dirección", "Tableros de dirección y comercial: avance y dinero por obra, cotizaciones y tasa de éxito por cliente", ["B3", "B7", "W2"]),
+    T("O3", "O", "F4", "Tableros", "A", 20, "Evaluación de desempeño", "Evaluación de desempeño: cumplimiento de tareas y plazos, atrasos y procedimiento", ["B4", "X1"]),
+
+    T("B5", "B", "SYH", "Seguridad e higiene", "A", 18, "Documentación SyH", "Documentación e ingresos de seguridad e higiene por obra, con responsable, estado y vencimientos", ["B1", "B2"]),
+    T("S1", "S", "SYH", "Seguridad e higiene", "A", 26, "Registros SyH", "Registros de SyH desde la intranet: aviso de obra, visita, capacitación, permiso de trabajo, entrega de EPP y charla de cinco minutos", ["B5"]),
+    T("S2", "S", "SYH", "Seguridad e higiene", "A", 14, "Control de subcontratistas", "Control de subcontratistas en obra, desde el celular", ["B6"]),
+    T("S3", "S", "SYH", "Comercial y clientes", "A", 14, "Alta en portales de clientes", "Alta de FERRO como proveedor en los portales de los clientes, con la documentación fiscal y sus vigencias controladas", ["B1"]),
+    T("S4", "S", "SYH", "Comercial y clientes", "A", 8, "Encuesta de satisfacción", "Encuesta de satisfacción del cliente al cierre de obra, con el registro que pide la norma", ["B2"]),
+    T("S5", "S", "SYH", "Seguridad e higiene", "A", 8, "Cartelería de obra", "Cartelería y documentación obligatoria de obra, generada por obra", ["B2"]),
+
+    T("IA1", "IA", "IA", "Minutas", "C", 12, "Minuta desde audio", "Minuta escrita desde el audio de la reunión, con responsables y fechas", ["B4"]),
+    T("IA2", "IA", "IA", "Partes diarios", "B", 10, "Parte por voz o WhatsApp", "Parte diario por voz o audio de WhatsApp, para revisar y confirmar", ["B3"], { flag: { k: "revisar", t: "Lebane ya ofrece un asistente por WhatsApp: ver si se superpone." } }),
+    T("IA3", "IA", "IA", "Adaptadores · Drive", "C", 18, "Buscador del Drive", "Buscador sobre el Drive de la empresa, que responde citando el archivo", ["O1"]),
+    T("IA4", "IA", "IA", "Precios y cotizaciones", "C", 16, "Lectura de pliegos", "Lectura de pliegos: del PDF a un preliminar de ítems y cómputo", ["B2"]),
+    T("IA5", "IA", "IA", "Proveedores", "C", 8, "Documentos de proveedores", "Lectura de la documentación de proveedores y carga de la ficha", ["B6"]),
+    T("IA6", "IA", "IA", "Precios y cotizaciones", "C", 8, "Redacción de cotizaciones", "Redacción de cotizaciones con las plantillas y antecedentes de la empresa", ["C4"]),
+
+    T("W2", "W", "COM", "Comercial y clientes", "A", 16, "Fichas de venta y cliente", "Ficha de venta y ficha de cliente digitales, que alimentan la base en lugar de una planilla por obra", ["B1", "B2"]),
+    T("W3", "W", "COM", "Web, fuera de la plataforma", "B", 18, "Rediseño de la web", "Rediseño completo de la web, con los textos ya redactados", [], { flag: { k: "definir", t: "La web la administra un tercero: definirlo con el dueño." } }),
+    T("W4", "W", "COM", "Comercial y clientes", "C", 16, "Búsqueda de oportunidades", "Búsqueda de proveedores y oportunidades nuevas, con seguimiento automático", ["B6"]),
+
+    T("O5", "O", "M", "Servicio", "*", 8, "Priorización y soporte", "Priorización mensual, capacitación de cada entrega y soporte de lo entregado", [], { monthly: true })
+  ];
+
+  var SUGGESTED = ["O4", "B1", "B2", "O2", "X1"];
+  var STORE_KEY = "ferro-mapa-seleccion-v1";
+  var byId = {};
+  TASKS.forEach(function (t) { byId[t.id] = t; });
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function hrs(t) { return t.monthly ? t.h + " h/mes" : t.h + " h"; }
+  function sum(list) { return list.reduce(function (a, t) { return a + t.h; }, 0); }
+  function faseById(id) { for (var i = 0; i < FASES.length; i++) { if (FASES[i].id === id) return FASES[i]; } return null; }
+
+  function loadSelection() {
+    try {
+      var raw = window.localStorage.getItem(STORE_KEY);
+      if (raw) {
+        var arr = JSON.parse(raw);
+        if (Array.isArray(arr)) return new Set(arr.filter(function (id) { return byId[id]; }));
+      }
+    } catch (e) { /* storage unavailable: fall back to the suggestion */ }
+    return new Set(SUGGESTED);
+  }
+  function saveSelection() {
+    try { window.localStorage.setItem(STORE_KEY, JSON.stringify(Array.from(selected))); } catch (e) { /* ignore */ }
+  }
+  var selected = loadSelection();
+
+  /* L3: phases and parallel lines */
+  function chip(t) {
+    return '<li><a class="chip' + (t.crit ? " crit" : "") + '" href="#t-' + t.id + '"><b>' + t.id + "</b><span>" + esc(t.s) + "</span><i>" + hrs(t) + "</i></a></li>";
+  }
+  function renderPhases() {
+    var html = FASES.filter(function (f) { return f.kind === "fase"; }).map(function (f) {
+      var tasks = TASKS.filter(function (t) { return t.fase === f.id; });
+      var chips;
+      if (tasks.length > 8) {
+        var order = [], groups = {};
+        tasks.forEach(function (t) {
+          if (!groups[t.area]) { groups[t.area] = []; order.push(t.area); }
+          groups[t.area].push(t);
+        });
+        chips = order.map(function (a) {
+          return '<div class="ph-group"><div class="ph-group-h"><span>' + esc(AREAS[a]) + "</span><span>" + sum(groups[a]) + ' h</span></div><ul class="chips">' + groups[a].map(chip).join("") + "</ul></div>";
+        }).join("");
+      } else {
+        chips = '<ul class="chips">' + tasks.map(chip).join("") + "</ul>";
+      }
+      return '<article class="phase" aria-labelledby="ph-' + f.id + '"><header class="ph-head"><span class="ph-no">' + f.id + '</span><h3 id="ph-' + f.id + '">' + esc(f.name) + '</h3><span class="ph-h">' + sum(tasks) + ' h</span></header><p class="ph-desc">' + esc(f.desc) + "</p>" + chips + "</article>";
+    }).join("");
+    document.getElementById("phases").innerHTML = html;
+
+    var tracks = FASES.filter(function (f) { return f.kind === "track"; }).map(function (f) {
+      var tasks = TASKS.filter(function (t) { return t.fase === f.id; });
+      var total = f.id === "M" ? "8 h por mes" : sum(tasks) + " h";
+      return '<div class="track"><div><h4>' + esc(f.name) + '</h4><div class="track-h">' + total + "</div><p>" + esc(f.desc) + '</p></div><ul class="chips">' + tasks.map(chip).join("") + "</ul></div>";
+    }).join("");
+    document.getElementById("tracks").innerHTML = tracks;
+  }
+
+  /* L4: task list */
+  var fArea = document.getElementById("f-area");
+  var fFase = document.getElementById("f-fase");
+  var fFrente = document.getElementById("f-frente");
+  var fSel = document.getElementById("f-sel");
+  var listEl = document.getElementById("task-list");
+
+  Object.keys(AREAS).forEach(function (k) {
+    var o = document.createElement("option"); o.value = k; o.textContent = AREAS[k]; fArea.appendChild(o);
+  });
+  FASES.forEach(function (f) {
+    var o = document.createElement("option"); o.value = f.id;
+    o.textContent = (f.kind === "fase" ? f.id + " · " : "Línea · ") + f.name; fFase.appendChild(o);
+  });
+
+  function row(t) {
+    var isSel = selected.has(t.id);
+    var missing = isSel ? t.deps.filter(function (d) { return !selected.has(d); }) : [];
+    var deps = t.deps.length ? '<span>Necesita ' + t.deps.map(function (d) { return '<a href="#t-' + d + '">' + d + "</a>"; }).join(" ") + "</span>" : "";
+    var frente = t.fr === "*" ? "Los tres frentes" : "Frente " + t.fr;
+    var flag = t.flag ? '<p class="flag flag-' + t.flag.k + '"><span class="flag-k">' + FLAG_LABEL[t.flag.k] + "</span><span>" + esc(t.flag.t) + "</span></p>" : "";
+    var warn = missing.length ? '<p class="flag flag-dep"><span class="flag-k">Dependencia</span><span>' + missing.join(", ") + " sin marcar en esta selección. Si ya está hecha, ignorar el aviso.</span></p>" : "";
+    return '<div class="task' + (isSel ? " is-sel" : "") + (t.crit ? " is-crit" : "") + '" id="t-' + t.id + '">' +
+      '<input type="checkbox" id="c-' + t.id + '" data-id="' + t.id + '"' + (isSel ? " checked" : "") + ">" +
+      '<label class="task-code" for="c-' + t.id + '">' + t.id + "</label>" +
+      '<div class="task-main"><label class="task-title" for="c-' + t.id + '">' + esc(t.t) + "</label>" +
+      '<div class="task-meta"><span>' + esc(t.mod) + "</span><span>" + frente + "</span>" + deps + "</div>" + flag + warn + "</div>" +
+      '<span class="task-h">' + hrs(t) + "</span></div>";
+  }
+
+  function renderList() {
+    var a = fArea.value, f = fFase.value, fr = fFrente.value, onlySel = fSel.checked;
+    var html = "", count = 0, hours = 0;
+    FASES.forEach(function (fase) {
+      var tasks = TASKS.filter(function (t) {
+        return t.fase === fase.id && (!a || t.area === a) && (!f || t.fase === f) &&
+          (!fr || t.fr === fr || t.fr === "*") && (!onlySel || selected.has(t.id));
+      });
+      if (!tasks.length) return;
+      count += tasks.length; hours += sum(tasks);
+      var label = fase.kind === "fase" ? fase.id : "Línea";
+      html += '<div class="grp"><span class="grp-no">' + label + '</span><span class="grp-name">' + esc(fase.name) + '</span><span class="grp-h">' + sum(tasks) + " h</span></div>";
+      html += tasks.map(row).join("");
+    });
+    listEl.innerHTML = html || '<p class="empty">No hay tareas con estos filtros.</p>';
+    document.getElementById("visible-meta").textContent = count + (count === 1 ? " tarea" : " tareas") + " · " + hours + " h en la vista";
+    updateSummary();
+  }
+
+  function updateSummary() {
+    var sel = TASKS.filter(function (t) { return selected.has(t.id); });
+    document.getElementById("sum-hours").textContent = sum(sel) + " h";
+    document.getElementById("sum-count").textContent = sel.length === 1 ? "1 tarea marcada" : sel.length + " tareas marcadas";
+    var missing = sel.filter(function (t) { return t.deps.some(function (d) { return !selected.has(d); }); }).length;
+    var w = document.getElementById("sum-warn");
+    w.hidden = missing === 0;
+    w.textContent = missing === 1 ? "1 tarea depende de otra sin marcar" : missing + " tareas dependen de otras sin marcar";
+  }
+
+  function filtersActive() { return fArea.value || fFase.value || fFrente.value || fSel.checked; }
+  function resetFilters() { fArea.value = ""; fFase.value = ""; fFrente.value = ""; fSel.checked = false; }
+
+  listEl.addEventListener("change", function (e) {
+    var el = e.target;
+    if (!el.matches || !el.matches("input[type=checkbox][data-id]")) return;
+    var id = el.getAttribute("data-id");
+    if (el.checked) selected.add(id); else selected.delete(id);
+    saveSelection();
+    renderList();
+    var again = document.getElementById("c-" + id);
+    if (again) again.focus();
+  });
+  [fArea, fFase, fFrente, fSel].forEach(function (el) { el.addEventListener("change", renderList); });
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#t-"]') : null;
+    if (a && filtersActive()) { resetFilters(); renderList(); }
+  });
+
+  document.getElementById("btn-suggest").addEventListener("click", function () {
+    selected = new Set(SUGGESTED); saveSelection(); renderList();
+    document.getElementById("copy-status").textContent = "Sugerencia cargada: fase F0 más el relevamiento de Bitrix24 y Lebane.";
+  });
+  document.getElementById("btn-clear").addEventListener("click", function () {
+    selected = new Set(); saveSelection(); renderList();
+    document.getElementById("copy-status").textContent = "Selección vacía.";
+  });
+  document.getElementById("btn-copy").addEventListener("click", function () {
+    var sel = TASKS.filter(function (t) { return selected.has(t.id); });
+    var status = document.getElementById("copy-status");
+    var fallback = document.getElementById("copy-fallback");
+    if (!sel.length) { status.textContent = "No hay tareas marcadas para copiar."; fallback.hidden = true; return; }
+    var text = ["FERRO · selección de tareas (" + sum(sel) + " h)"].concat(sel.map(function (t) {
+      return "- [ ] " + t.id + " · " + t.t + " (" + hrs(t) + ")";
+    })).join("\n");
+    function showFallback() {
+      fallback.value = text; fallback.hidden = false; fallback.focus(); fallback.select();
+      status.textContent = "El texto quedó seleccionado: copiarlo con Ctrl+C o Cmd+C.";
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          fallback.hidden = true;
+          status.textContent = "Se copiaron " + sel.length + " tareas como lista para GitHub.";
+        }, showFallback);
+      } else { showFallback(); }
+    } catch (err) { showFallback(); }
+  });
+
+  renderPhases();
+  renderList();
+})();
+</script>
+</body>
+</html>
